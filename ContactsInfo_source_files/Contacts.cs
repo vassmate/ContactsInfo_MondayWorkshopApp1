@@ -28,6 +28,8 @@ namespace WorkshopApp1
         // Clears the textboxes after clicking on the button
         private void save_Click(object sender, EventArgs e)
         {
+            listBox.Items.Clear();
+
             TelephoneDirectory.SavePersonToList(person);
             TelephoneDirectory.CreateOrOpenTelephoneDirectory(person);
             listBox.Items.Add("Added to phonebook: " + person);
@@ -54,6 +56,7 @@ namespace WorkshopApp1
             ageBox.Text = "";
             mobileBox.Text = "";
             typeBox.Text = "";
+            listBox.Items.Clear();
 
             string[] personListStrings = TelephoneDirectory.ListPersonsFromPhoneBook();
             foreach (string personString in personListStrings)

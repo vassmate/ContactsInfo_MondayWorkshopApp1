@@ -28,15 +28,15 @@ namespace WorkshopApp1
         // Clears the textboxes after clicking on the button
         private void save_Click(object sender, EventArgs e)
         {
+            TelephoneDirectory.SavePersonToList(person);
+            TelephoneDirectory.CreateOrOpenTelephoneDirectory(person);
+            listBox.Items.Add("Added to phonebook: " + person);
+
             nameBox.Text = "";
             addressBox.Text = "";
             ageBox.Text = "";
             mobileBox.Text = "";
             typeBox.Text = "";
-
-            TelephoneDirectory.SavePersonToList(person);
-            TelephoneDirectory.CreateOrOpenTelephoneDirectory(person);
-            listBox.Items.Add("Added to phonebook: " + person);
         }
 
         // Do action when clicking on list button

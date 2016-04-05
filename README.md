@@ -1,4 +1,4 @@
-# ContactsInfo_MondayWorkshopApp1
+# ContactsInfo_App
 Repository for the Week 13B Monday Workshop
 
 # Description

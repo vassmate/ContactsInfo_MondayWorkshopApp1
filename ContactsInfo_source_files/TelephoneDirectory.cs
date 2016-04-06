@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace WorkshopApp1
+namespace ContactsInfoApp
 {
     public class TelephoneDirectory
     {

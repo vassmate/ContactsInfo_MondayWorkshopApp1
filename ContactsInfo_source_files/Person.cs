@@ -1,4 +1,4 @@
-﻿namespace WorkshopApp1
+﻿namespace ContactsInfoApp
 {
     // Creating struct for Person object
     public struct Person

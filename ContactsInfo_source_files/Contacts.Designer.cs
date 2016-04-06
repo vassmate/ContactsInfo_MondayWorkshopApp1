@@ -1,4 +1,4 @@
-﻿namespace WorkshopApp1
+﻿namespace ContactsInfoApp
 {
     partial class Contacts
     {
@@ -42,6 +42,8 @@
             this.list = new System.Windows.Forms.Button();
             this.listLabel = new System.Windows.Forms.Label();
             this.listBox = new System.Windows.Forms.ListBox();
+            this.cpu_usage = new System.Windows.Forms.Label();
+            this.memory_usage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // nameBox
@@ -170,11 +172,31 @@
             this.listBox.TabIndex = 15;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             // 
+            // cpu_usage
+            // 
+            this.cpu_usage.AutoSize = true;
+            this.cpu_usage.Location = new System.Drawing.Point(9, 258);
+            this.cpu_usage.Name = "cpu_usage";
+            this.cpu_usage.Size = new System.Drawing.Size(13, 13);
+            this.cpu_usage.TabIndex = 16;
+            this.cpu_usage.Text = ">";
+            // 
+            // memory_usage
+            // 
+            this.memory_usage.AutoSize = true;
+            this.memory_usage.Location = new System.Drawing.Point(9, 279);
+            this.memory_usage.Name = "memory_usage";
+            this.memory_usage.Size = new System.Drawing.Size(13, 13);
+            this.memory_usage.TabIndex = 17;
+            this.memory_usage.Text = ">";
+            // 
             // Contacts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(399, 301);
+            this.Controls.Add(this.memory_usage);
+            this.Controls.Add(this.cpu_usage);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.listLabel);
             this.Controls.Add(this.list);
@@ -194,6 +216,7 @@
             this.Name = "Contacts";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Contacts";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -216,6 +239,8 @@
         private System.Windows.Forms.Button list;
         private System.Windows.Forms.Label listLabel;
         private System.Windows.Forms.ListBox listBox;
+        private System.Windows.Forms.Label cpu_usage;
+        private System.Windows.Forms.Label memory_usage;
     }
 }
 

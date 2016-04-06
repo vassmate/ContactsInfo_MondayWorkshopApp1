@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace WorkshopApp1
+namespace ContactsInfoApp
 {
     public partial class Contacts : Form
     {
         // Init. person for handling Person type object(s)
-        Person person;
+        private Person person;
 
         // Constructor for Form
         public Contacts()
@@ -21,6 +22,14 @@ namespace WorkshopApp1
             typeBox.Items.Add(Person.Type.Workplace);
             typeBox.Items.Add(Person.Type.Home);
             typeBox.Items.Add(Person.Type.Mobile);
+
+            PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+            cpuCounter.NextValue();
+            ramCounter.NextValue();
+            System.Threading.Thread.Sleep(1000);
+            cpu_usage.Text = "CPU usage: " + cpuCounter.NextValue() + "%";
+            memory_usage.Text = "Memory usage: " + ramCounter.NextValue() + "MB";
         }
 
         // Do action when clicking on save button
@@ -30,9 +39,17 @@ namespace WorkshopApp1
         {
             listBox.Items.Clear();
 
-            TelephoneDirectory.SavePersonToList(person);
-            TelephoneDirectory.CreateOrOpenTelephoneDirectory(person);
-            listBox.Items.Add("Added to phonebook: " + person);
+            try
+            {
+                person._name.GetType();
+                TelephoneDirectory.SavePersonToList(person);
+                TelephoneDirectory.CreateOrOpenTelephoneDirectory(person);
+                MessageBox.Show("Contact saved!" + "\n" + person, "Confirm", MessageBoxButtons.OK);
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Missing property! Contact won't get saved!" + "\n" + exception.Message, "Contact error", MessageBoxButtons.OK);
+            }
 
             nameBox.Text = "";
             addressBox.Text = "";
@@ -90,6 +107,10 @@ namespace WorkshopApp1
             {
                 person._age = ageNum;
             }
+            else
+            {
+                person._age = 0;
+            }
         }
 
         // Set the person._mobilenumber parameter in the mobilenumber textbox after converting it
@@ -99,6 +120,10 @@ namespace WorkshopApp1
             if (int.TryParse(mobileBox.Text, out mobilenumber))
             {
                 person._mobilenumber = mobilenumber;
+            }
+            else
+            {
+                person._mobilenumber = 0;
             }
         }
 

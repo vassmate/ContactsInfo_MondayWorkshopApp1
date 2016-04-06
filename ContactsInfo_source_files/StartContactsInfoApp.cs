@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace WorkshopApp1
+namespace ContactsInfoApp
 {
     static class StartContactsInfoApp
     {

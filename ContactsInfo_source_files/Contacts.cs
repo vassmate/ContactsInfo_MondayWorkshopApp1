@@ -8,6 +8,7 @@ namespace ContactsInfoApp
     {
         // Init. person for handling Person type object(s)
         private Person person;
+        private int memberCount = 0;
 
         // Constructor for Form
         public Contacts()
@@ -22,7 +23,13 @@ namespace ContactsInfoApp
             typeBox.Items.Add(Person.Type.Workplace);
             typeBox.Items.Add(Person.Type.Home);
             typeBox.Items.Add(Person.Type.Mobile);
+            monitor_Process();
+        }
 
+        // Shows total cpu and memory usage of the system after start
+        private void monitor_Process()
+        {
+            
             PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
             cpuCounter.NextValue();
@@ -32,25 +39,10 @@ namespace ContactsInfoApp
             memory_usage.Text = "Memory usage: " + ramCounter.NextValue() + "MB";
         }
 
-        // Do action when clicking on save button
-        // Adds the persons to a list as well as writes them into a file
-        // Clears the textboxes after clicking on the button
-        private void save_Click(object sender, EventArgs e)
+        // Clear all textbox and the listbox
+        public void clearBoxes()
         {
             listBox.Items.Clear();
-
-            try
-            {
-                person._name.GetType();
-                TelephoneDirectory.SavePersonToList(person);
-                TelephoneDirectory.CreateOrOpenTelephoneDirectory(person);
-                MessageBox.Show("Contact saved!" + "\n" + person, "Confirm", MessageBoxButtons.OK);
-            }
-            catch(Exception exception)
-            {
-                MessageBox.Show("Missing property! Contact won't get saved!" + "\n" + exception.Message, "Contact error", MessageBoxButtons.OK);
-            }
-
             nameBox.Text = "";
             addressBox.Text = "";
             ageBox.Text = "";
@@ -58,33 +50,45 @@ namespace ContactsInfoApp
             typeBox.Text = "";
         }
 
-        // Do action when clicking on list button
+        // Read data from phonebook.dat file when clicking on save button
+        // Checks if the entered data is valid or not and warns the user accordingly
         // Clears the textboxes after clicking on the button
-        // ***Add below codesnippet to list_Click method for reading from file***
-        /* string[] personListStrings = TelephoneDirectory.ListPersonsFromPhoneBook();
-           foreach (string personString in personListStrings)
+        private void save_Click(object sender, EventArgs e)
+        {
+            try
             {
-                listBox.Items.Add(personString);
-            } */
+                person._name.GetType();
+                person._address.GetType();
+
+                if (person._name == " " || person._address == " " || person._age <= 0 || person._age.ToString().Length > 2)
+                {
+                    throw new Exception();
+                }
+                TelephoneDirectory.SavePersonToList(person);
+                TelephoneDirectory.CreateOrOpenTelephoneDirectory(person);
+                MessageBox.Show("Contact saved!" + "\n" + person, "Confirm", MessageBoxButtons.OK);
+                memberCount += 1;
+            }
+            catch(Exception exception)
+            {
+                MessageBox.Show("Missing or invalid property! Contact won't get saved!\n" + exception.Message, "Contact Error", MessageBoxButtons.OK);
+            }
+            listLabel.Text = "Contact list (" + memberCount + "):";
+            clearBoxes();
+        }
+
+        // Put data in a phonebook.dat file when clicking on list button
+        // Clears the textboxes after clicking on the button
         private void list_Click(object sender, EventArgs e)
         {
-            nameBox.Text = "";
-            addressBox.Text = "";
-            ageBox.Text = "";
-            mobileBox.Text = "";
-            typeBox.Text = "";
             listBox.Items.Clear();
-
             string[] personListStrings = TelephoneDirectory.ListPersonsFromPhoneBook();
             foreach (string personString in personListStrings)
             {
                 listBox.Items.Add(personString);
+                memberCount += 1;
             }
-
-            /*foreach (Person personInList in TelephoneDirectory.LoadPersonFromList())
-            {
-                listBox.Items.Add(personInList);
-            }*/
+            listLabel.Text = "Contact list (" + memberCount + "):";
         }
 
         // Set person._name parameter in the name textbox
@@ -144,6 +148,13 @@ namespace ContactsInfoApp
         private void mobile_Click(object sender, EventArgs e)
         {
             
+        }
+
+        //Refresh the CPU and RAM usage
+        private void button1_Click(object sender, EventArgs e)
+        {
+            monitor_Process();
+            clearBoxes();
         }
     }
 }

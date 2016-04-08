@@ -29,14 +29,23 @@ namespace ContactsInfoApp
         // Shows total cpu and memory usage of the system after start
         private void monitor_Process()
         {
-            
+            Process thisProc = Process.GetCurrentProcess();
+            string procName = thisProc.ProcessName;
             PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             PerformanceCounter ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-            cpuCounter.NextValue();
-            ramCounter.NextValue();
-            System.Threading.Thread.Sleep(1000);
-            cpu_usage.Text = "CPU usage: " + cpuCounter.NextValue() + "%";
-            memory_usage.Text = "Memory usage: " + ramCounter.NextValue() + "MB";
+            try
+            {
+                cpuCounter.NextValue();
+                ramCounter.NextValue();
+                System.Threading.Thread.Sleep(1000);
+                cpu_usage.Text = "CPU usage: " + cpuCounter.NextValue() + "%";
+                memory_usage.Text = "Available RAM: " + ramCounter.NextValue() + "MB";
+            }
+            catch (Exception)
+            {
+                cpu_usage.Text = "CPU usage: " + 0 + "%";
+                memory_usage.Text = "Available RAM: " + 0 + "MB";
+            }
         }
 
         // Clear all textbox and the listbox
@@ -81,6 +90,7 @@ namespace ContactsInfoApp
         // Clears the textboxes after clicking on the button
         private void list_Click(object sender, EventArgs e)
         {
+            memberCount = 0;
             listBox.Items.Clear();
             string[] personListStrings = TelephoneDirectory.ListPersonsFromPhoneBook();
             foreach (string personString in personListStrings)
@@ -150,11 +160,23 @@ namespace ContactsInfoApp
             
         }
 
-        //Refresh the CPU and RAM usage
+        // Refresh the CPU and RAM usage
         private void button1_Click(object sender, EventArgs e)
         {
             monitor_Process();
             clearBoxes();
+        }
+
+        private void topMostSwitch_CheckedChanged(object sender, EventArgs e)
+        {
+            if (topMostSwitch.Checked)
+            {
+                TopMost = true;
+            }
+            else if (!topMostSwitch.Checked)
+            {
+                TopMost = false;
+            }
         }
     }
 }

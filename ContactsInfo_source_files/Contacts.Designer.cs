@@ -45,6 +45,7 @@
             this.cpu_usage = new System.Windows.Forms.Label();
             this.memory_usage = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.topMostSwitch = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // nameBox
@@ -201,11 +202,23 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // topMostSwitch
+            // 
+            this.topMostSwitch.AutoSize = true;
+            this.topMostSwitch.Location = new System.Drawing.Point(295, 279);
+            this.topMostSwitch.Name = "topMostSwitch";
+            this.topMostSwitch.Size = new System.Drawing.Size(92, 17);
+            this.topMostSwitch.TabIndex = 20;
+            this.topMostSwitch.Text = "Always on top";
+            this.topMostSwitch.UseVisualStyleBackColor = true;
+            this.topMostSwitch.CheckedChanged += new System.EventHandler(this.topMostSwitch_CheckedChanged);
+            // 
             // Contacts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(399, 301);
+            this.Controls.Add(this.topMostSwitch);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.memory_usage);
             this.Controls.Add(this.cpu_usage);
@@ -253,6 +266,7 @@
         private System.Windows.Forms.Label cpu_usage;
         private System.Windows.Forms.Label memory_usage;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox topMostSwitch;
     }
 }
 
